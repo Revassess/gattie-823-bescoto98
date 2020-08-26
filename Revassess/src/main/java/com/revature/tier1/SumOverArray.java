@@ -12,7 +12,7 @@ public class SumOverArray {
 			}
 			return sum;
 		}
-		catch(NullPointerException e) {
+		catch(Exception e) {
 			return 0;
 		}
 	
