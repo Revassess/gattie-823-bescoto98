@@ -1,6 +1,10 @@
 package com.revature.config;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * 
@@ -27,13 +31,46 @@ public class ConnectionUtil {
 	public static final String TIER_3_SEQUENCE_NAME = "setid";
 
 	// implement this method to connect to the db and return the connection object
-	public Connection connect(){
-		return null;
+	public Connection connect() throws SQLException{
+		
+		try{
+			Class.forName("org.postgresql.Driver");
+		} catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+
+		return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+		
 	}
 
 
 	//implement this method with a callable statement that calls the absolute value sql function
 	public long callAbsoluteValueFunction(long value){
+		
+		try(Connection conn = connect()){
+			
+			String sql = "select abs ("+value+") as returnedValue;";
+			
+			Statement st = conn.createStatement();
+			
+			ResultSet result = st.executeQuery(sql);
+			
+			long temp = 0;
+			
+			if(result.next()) {
+				temp = result.getLong("returnedValue");
+				
+			}
+			
+			return temp;
+		}
+		catch(SQLException e) {
+			e.printStackTrace();
+				
+		}
+//		SELECT Abs(-243.5) AS AbsNum; 
+		
+		
 		return value;
 	}
 	
