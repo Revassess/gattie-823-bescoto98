@@ -68,8 +68,6 @@ public class ConnectionUtil {
 			e.printStackTrace();
 				
 		}
-//		SELECT Abs(-243.5) AS AbsNum; 
-		
 		
 		return value;
 	}
